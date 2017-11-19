@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";  
+  
+.pro {  
+    cursor: default;  
+}  
+  
+#auto {  
+	z-index:9999;
+    background-color: white ;
+}  
+  
