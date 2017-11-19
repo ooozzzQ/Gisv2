@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="user.css"/>  
+<meta charset="UTF-8" http-equiv="Content-Type" content="text/html" />
+<title>NMMP网络视频监控综合业务管理平台</title>
+<script type="text/javascript"> 
+function init() { 
+	var err = OCXTest.InitUI(23, "113.200.93.36", 3000, "admin", "12345", "", 0);
+	if(0 != err){
+/*		alert("登录服务器失败，错误代码为: " + err);
+		window.location = "login.html";*/
+	}else{
+		var errNo = OCXTest.OpenChannel(0, '{{CFCA0074-6DF9-4E4A-80F3-8AC53AF9D566}_0001}', 0);
+		if(0 != errNo){
+			alert("打开实时视频失败，错误代码为: " + err);
+		}
+		/*		alert("登录服务器失败，错误代码为: " + err);
+		window.location = "login.html";*/
+	}
+} 
+
+</script>
+</head>
+<body onLoad="init()">
+        <div class="B">
+		  <object
+			  classid="clsid:D7CBB81A-1A2C-4FA7-AB12-DDC381FC7570"
+			  codebase="./WebOCX.cab#version=1,0,0,301"	
+			  id="OCXTest"
+			  width="100%"
+			  height="100%" 
+			  align=center
+			  hspace=0
+			  vspace=0
+		>
+			<param name="SkinSelectIdx" value="32">			<!--功能索引号 -->
+			<param name="ServerIP" value="127.0.0.1">    	<!--视频监控平台服务器IP地址 -->
+			<param name="ServerPort" value="3000">			<!--视频监控平台服务器端口号 -->
+			<param name="UserName" value="admin">			<!--如果bMustWebServers=1表示WebServers用户名 反之表示视频监控平台登录用户名 -->
+			<param name="UserPassword" value="12345">		<!--视频监控平台登录密码 -->
+			<!--当bMustWebServers=1是有效，表示WebServers服务器地址 -->
+			<param name="WebServers_Get_Org" value="http://43.1.34.80:8080/csjj/services1/synOrgForDevice?wsdl">	
+			<!--value=1 设备从WebServers加载 反之从视频监控平台加载 -->
+			<param name="bMustWebServers" value=0>	
+		<!--	value =1 应用终端通过代理服务器访问 反之直接登录 -->
+			<param name="ProxyStartup" value=0>	
+		<!--	代理服务器IP地址 -->
+			<param name="ProxyServerIP" value="43.1.34.85">	
+		<!--	代理服务器端口 -->
+			<param name="ProxyServerPort" value=3030>		
+		  </object>
+		</div>
+    </div>
+
+	<script language="javascript" event="OnBeforeLogin" for="OCXTest">
+		<!--  alert("please modify user information");	 -->
+	</script>
+	<script language="javascript" event="OnLoginFaild" for="OCXTest">
+		window.location = "MainUI.html";
+<!--	  alert("web close");-->	
+/*	  window.close();*/
+	</script>
+	<script language="javascript" event="OnAfterLogin(iErr)" for="OCXTest">
+<!--	  alert(iErr);-->
+	</script>
+	<script language="javascript" event="OnPreviewMouse(iEvent, iChannel)" for="OCXTest">
+/*	  if(2 == iEvent){
+		alert(iEvent + '/' + iChannel);
+	  }
+	  if(1024 == iEvent){	
+		alert(iChannel);
+	  }
+	  if(1025 == iEvent){
+		alert(iChannel);
+	  }*/
+	</script>
+	<script language="javascript" event="OnBmpStream(bmpfile)" for="OCXTest">
+/*	  alert(bmpfile);*/
+	</script>
+	<script language="javascript" event="OnBmpStreamEx(captureType, cameraID, sBmpFileName, sBmpData)" for="OCXTest">
+<!--	  alert("类型:" + captureType.toString() + " 摄像机ID:" + cameraID + " 图片文件名:" + sBmpFileName + " 编码后数据:" + sBmpData);-->
+	</script>
+</body>
+</HTML>
