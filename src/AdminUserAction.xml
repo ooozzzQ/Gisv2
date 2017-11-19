@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<!-- 设置为开发模式 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 指定action的扩展名为action <constant name="struts.action.extension" value="action" 
+		/> -->
+	<!-- 设置主题为simple -->
+	<constant name="struts.ui.theme" value="simple" />
+
+	<package name="action" extends="struts-default" namespace="/">
+		<action name="AdminUserAction" class="action.AdminUserAction">
+			<result name="login">/login.jsp</result>
+			<result name="loginsuccess" type="redirectAction">
+				 <param name="actionName">SearchCarAction!getCarList?username=${username}</param>
+			</result>
+			<result name="loginerror">/login.jsp</result>
+		</action>
+	</package>
+	
+	<include file="SearchAction.xml" />
+</struts>
+

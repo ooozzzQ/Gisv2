@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- 配置数据持久层 -->
+	<bean id="userDao" class="daoimpl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 这里属于属性注入，还有一种方法是构造函数注入，即 <constructor-arg index="参数序列号 " type ="参数类型" 
+		ref="dao"> <value>参数的值</value> </constructor-arg> -->
+	<bean id="adminService" class="serviceimp.AdminServiceImpl">
+		<property name="userDao" ref="userDao" />
+	</bean>
+
+
+	<!-- 配置控制层 action层调用service 实现控制反转 scope="prototype"：默认为单例模式，存在线程安全问题，这样设置可以保证每次请求都创建一个 
+		action，就不存在线程安全问题了 -->
+	<bean id="AdminUserAction" class="action.AdminUserAction" scope="prototype">
+		<property name="adminService" ref="adminService" />
+	</bean>
+	
+	
+	<bean id="searchCarDao" class="daoimpl.SearchCarDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="searchCarServiceInterface" class="serviceimp.SearchCarServiceImpl">
+		<property name="searchCarDao" ref="searchCarDao" />
+	</bean>
+
+	<bean id="SearchCarAction" class="action.SearchCarAction" scope="prototype">
+		<property name="searchCarServiceInterface" ref="searchCarServiceInterface" />
+	</bean>
+	
+	<bean id="AutocompleteAction" class="action.AutocompleteAction" scope="prototype">
+		<property name="autocompleteServiceInterface" ref="autocompleteServiceInterface" />
+	</bean>
+	
+	<bean id="autocompleteServiceInterface" class="serviceimp.AutocompleteServiceImpl">
+		<property name="searchCarDao" ref="searchCarDao" />
+	</bean>
+</beans>

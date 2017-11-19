@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	
+	<!-- 当struts的配置文件修改后，系统是否自动重新加载该文件，默认为false(生产环境使用false)，开发阶段最好打开 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 开发模式下使用，这样可以打印出更详细的错误信息(生产环境设置成false) -->
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	
+	
+	<package name="default4" extends="struts-default">
+		<action name="CarAction" class="action.CarAction">
+		   <result name="code">/test.jsp</result>
+		   <result name="lonlat">/test.jsp</result>
+		</action>
+	</package>
+	
+	 <package name="ajax_json" namespace="/" extends="json-default">
+	    <action name="getLastInfoByArryCarId" class="action.CarAction" method="getLastInfoByArryCarId">
+	    </action> 
+	    <action name="getLastInfoByCarId" class="action.CarAction" method="getLastInfoByCarId">
+	    </action>     
+	  </package>
+	<!-- 用户管理模块-->
+	<include file="AdminUserAction.xml" />
+	<!-- 实时监控与轨迹查询 -->
+    <include file="SearchAction.xml" />
+    <!-- 统计信息 -->
+    <include file="StatisticsAction.xml" />
+</struts>
